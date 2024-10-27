@@ -1,0 +1,22 @@
+.register-table {
+  width: 85%;
+  height: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  
+  & thead tr td {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  & th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  & tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+}

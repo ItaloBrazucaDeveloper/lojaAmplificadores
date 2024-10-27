@@ -1,0 +1,16 @@
+.navigation-menu {
+  & li {
+    display: inline-flex;
+    margin: 10px;
+  }
+
+  & a {
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: red;
+      transition: ease 0.5s;
+    }
+  }
+}

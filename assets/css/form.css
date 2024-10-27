@@ -1,0 +1,88 @@
+form {
+  display: grid;
+  place-items: center;
+  gap: 15px;
+  width: 20em;
+  padding: 5px;
+
+  & .input_with_placeholder_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    &:has(input:focus) label,
+    &:has(input:not(:placeholder-shown)) label {
+      display: none;
+    }
+
+    &>label {
+      position: absolute;
+      translate: 0 -50%;
+      top: 50%;
+      left: 14px;
+      user-select: none;
+      -webkit-user-select: none;
+      color: #3a3a3a;
+    }
+
+    &>input {
+      height: inherit;
+      width: inherit;
+      outline: none;
+      border: 2px solid #1a1a1a;
+      border-radius: 2px;
+      padding: 7px 14px;
+      color: #1a1a1a;
+      font-size: 1rem;
+
+      &.invalid_input {
+        border: 2px solid red;
+
+        &:focus {
+          border: 2px solid red;
+          outline: none;
+        }
+      }
+
+    }
+
+  }
+
+  & .input_container {
+    display: flex;
+    gap: 10px;
+  }
+
+  & .container_radios {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  & .msg_error {
+    display: none;
+    display: flex;
+    font-size: 1rem;
+    font-weight: 600;
+    color: red;
+  }
+
+  & button[type="submit"] {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: black;
+    color: whitesmoke;
+    padding: 9px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    outline: 2px solid #1a1a1a;
+  }
+
+}

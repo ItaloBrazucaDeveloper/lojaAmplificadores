@@ -1,8 +1,0 @@
-const dialogForm = document.querySelector(".dialog-form");
-const buttonsOpenDialog = document.querySelectorAll(".open-dialog");
-
-buttonsOpenDialog.forEach((button) => {
-  button.onclick = () => {
-    dialogForm.showModal();
-  };
-});

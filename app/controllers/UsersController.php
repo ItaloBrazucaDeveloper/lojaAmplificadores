@@ -1,7 +1,6 @@
 <?PHP
 
 namespace App\controllers;
-
 use App\models\UsersModel;
 
 class UsersController
@@ -15,10 +14,9 @@ class UsersController
   private function list(): array
   {
     $response = UsersModel::getUsers();
-    if (!$response)
-      return [[], []];
-
+    
     $headers = [
+      "N°",
       "Nome",
       "Login",
       "Função",
@@ -28,12 +26,6 @@ class UsersController
 
     $usersData = [];
     while ($userTableRow = $response->fetch_assoc()) {
-      $userTableRow["actions"] = "
-        <div>
-          <img height='20px' src=\"assets/svg/edit_row.svg\" alt=\"editar\" />
-          <img height='20px' src=\"assets/svg/remove_row.svg\" alt=\"remover\" />
-        </div>
-      ";
       $usersData[] = $userTableRow;
     }
 
@@ -45,7 +37,25 @@ class UsersController
 
   public function create()
   {
+    [
+      "name" => $name,
+      "username" => $userName,
+      "userpasswd" => $userPasswd,
+      "userrole" => $userRole
+    ] = $_POST;
 
+    $isCreated = UsersModel::createUser(
+      user: [
+        $name,
+        $userName,
+        $userPasswd,
+        $userRole
+      ]
+    );
+
+    $successQueyUri = $isCreated ? "true" : "false";
+    header("Location: users?sucess={$successQueyUri}");
+    exit;
   }
 
   public function edit()

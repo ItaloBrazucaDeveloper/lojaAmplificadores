@@ -9,6 +9,46 @@ class Input extends Component
   private string $placeholder;
   private string $type;
 
+  public function getName(): string
+  {
+    return $this->name;
+  }
+
+  public function setName(string $name): void
+  {
+    $this->name = $name;
+  }
+
+  public function getLabel(): string
+  {
+    return $this->label;
+  }
+
+  public function setLabel(string $label): void
+  {
+    $this->label = $label;
+  }
+
+  public function getPlaceholder(): string
+  {
+    return $this->placeholder;
+  }
+
+  public function setPlaceholder(string $placeholder): void
+  {
+    $this->placeholder = $placeholder;
+  }
+
+  public function getType(): string
+  {
+    return $this->type;
+  }
+
+  public function setType(string $type): void
+  {
+    $this->type = $type;
+  }
+
   /**
    * @param string $name
    * @param string $type

@@ -57,6 +57,11 @@
       max-height: 400px;
       overflow-y: auto;
       width: 100%;
+
+      & tr:hover {
+        background: #00000020;
+        transition: all 0.3s ease-in-out;
+      }
     }
 
     & tr {

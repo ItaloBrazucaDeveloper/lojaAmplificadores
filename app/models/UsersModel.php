@@ -23,6 +23,7 @@ class UsersModel
     $response = Database::read(
       tableName: "funcionarios",
       columns: [
+        "cod_fun",
         "nome_fun",
         "login_fun",
         "funcao_fun",
@@ -34,15 +35,23 @@ class UsersModel
     return $response;
   }
 
-  public function createUser($user)
+  public static function createUser(array $user): bool
   {
-    $this->initConnection();
+    self::initConnection();
 
     $reponse = Database::create(
-
+      tableName: "funcionarios",
+      columns: [
+        "nome_fun",
+        "login_fun",
+        "senha_fun",
+        "funcao_fun"
+      ],
+      values: $user
     );
 
     Database::close();
+    return $reponse;
   }
 
   public function updateUser($user)

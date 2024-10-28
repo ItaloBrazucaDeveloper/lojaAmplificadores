@@ -11,7 +11,6 @@ class Router implements Routes
 
     if (!class_exists($controllPath)) {
       self::call404Page();
-      exit;
     }
 
     $controlIntance = new $controllPath();
@@ -32,7 +31,7 @@ class Router implements Routes
     );
 
     $uriNoSiteName = str_replace(
-      search: "/370738/lojaAmplificadores",
+      search: "/loja_amp",
       replace: "",
       subject: $uri
     );

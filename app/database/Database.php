@@ -46,9 +46,22 @@ class Database
     return $conditionsOfColumns ?? "";
   }
 
-  public static function create(): bool
-  {
+  public static function create(
+    string $tableName,
+    array $columns,
+    array $values
+  ): bool {
+    $columns = implode(", ", $columns);
+    $values = implode("', '", $values);
 
+    $insertQuery = "
+      INSERT INTO `{$tableName}`
+        ({$columns})
+      VALUES
+        ('{$values}')
+    ";
+
+    return self::$mySqlConnection->query($insertQuery);
   }
 
   public static function update(): bool

@@ -11,6 +11,21 @@ class Form extends Component
   /** @var Input[]  */
   private array $inputs;
 
+  public function setMethod(string $method): void
+  {
+    $this->method = $method;
+  }
+
+  public function setAction(string $action): void
+  {
+    $this->action = $action;
+  }
+
+  public function setInputs(array $inputs): void
+  {
+    $this->inputs = $inputs;
+  }
+
   public function __construct(
     string $method,
     string $action,
@@ -35,15 +50,23 @@ class Form extends Component
     );
   }
 
-  public function render(): string
+  public function render($hasCancelButton = false): string
   {
     return "
       <form
         action='{$this->action}'
         method='{$this->method}'
       >
-        " . implode("", $this->renderedInputs()) . "
-        <button type='submit'>{$this->submitButtonText}</button>
+        " .
+          implode("", $this->renderedInputs())
+        . "
+        <footer class='form-buttons'>
+          " . (
+            $hasCancelButton ?
+            "<button type='button' class='cancel-button'>Cancelar</button>" : ""
+          ) . "
+          <button type='submit'>{$this->submitButtonText}</button>
+        </footer>
       </form>
     ";
   }

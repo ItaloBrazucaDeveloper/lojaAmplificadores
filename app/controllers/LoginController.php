@@ -2,8 +2,8 @@
 
 namespace App\controllers;
 require_once "autoload.php";
+use App\Helpers\DataHygiene;
 use App\models\LoginModel;
-use App\components\navigationMenu\NavigationMenu;
 
 class LoginController
 {
@@ -16,11 +16,23 @@ class LoginController
   {
     $username = $_POST["username"];
     $password = $_POST["password"];
+    $isValidUser = false;
 
-    $isValidLogin = LoginModel::authenticate($username, $password);
+    if (!DataHygiene::isEmptyString($username, $password)) {
+      [
+        "response" => $response,
+        "isValidUser" => $isValidUser
+      ] = LoginModel::authenticate($username, $password);
 
-    if ($isValidLogin) {
-
+      $_SESSION["userSessionInfo"] = [
+        "name" => $response["nome_fun"],
+        "responsability" => $response["funcao_fun"]
+      ];
     }
+
+    $headerLocation = $isValidUser ? "home" : "./";
+
+    header("Location: {$headerLocation}");
+    exit();
   }
 }

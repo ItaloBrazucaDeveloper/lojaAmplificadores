@@ -1,30 +1,28 @@
-﻿<?PHP
-session_start();
-require "../src/functions/valida_sessao.php";
-include "../src/views/menu_global.php";
-?>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Administração</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="../assets/css/global.css">
-  <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+  <title>Administração</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/global.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/navigationMenu.css">
 </head>
 
 <body>
   <div class="main-container">
 
-    <header>
-      <h1 id="logo">
+    <header class="header-page">
+      <h1 class="logo">
         ROCK N'ROLL <br>
         Amplificadores
       </h1>
-      <?= Navi ?>
+      <?PHP
+      use App\components\navigationMenu\NavigationMenu;
+      $userSessionInfo = $_SESSION["userSessionInfo"];
+      echo NavigationMenu::render($userSessionInfo["responsability"]);
+      ?>
     </header>
 
     <main id="conteudo_especifico">
@@ -36,7 +34,7 @@ include "../src/views/menu_global.php";
     </main>
 
     <footer>
-      <div id="texto_institucional">
+      <div id="institutial-text">
         <span>
           AMPLI - CONTROL <br>
           Rua do Rock, 666 -- E-mail: contato@ampli_control.com.br -- Fone: (61) 9966 - 6677

@@ -1,26 +1,33 @@
 <?PHP
 
 namespace App\models;
-require_once "autoload.php";
 use App\database\Database;
 
 class LoginModel
 {
-  public static function authenticate(string $userName, string $password): bool
+  public static function authenticate(string $userName, string $password): array
   {
     Database::connect(
       hostName: "localhost",
       userName: "root",
       userPasswd: "",
-      databaseName: "370738"
+      databaseName:"370738"
     );
 
     $response = Database::read(
       tableName: "funcionarios",
-      columns: ["nome_fun", "login_fun", "senha_fun"]
+      columns: ["nome_fun", "funcao_fun"],
+      conditions: [
+        "login_fun" => $userName,
+        "senha_fun" => $password
+      ],
     );
-    var_dump($response->fetch_assoc());
+
     Database::close();
-    return $response;
+
+    return [
+      "response" => $response->fetch_assoc(),
+      "isValidUser" => $response->num_rows
+    ];
   }
 }

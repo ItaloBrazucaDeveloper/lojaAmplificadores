@@ -31,10 +31,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		gap: 15px;
-		height: 60%;
-		padding: 5px;
-		text-align: center;
+		height: 100%;
+		width: 100%;
 	}
 
 	&>footer {

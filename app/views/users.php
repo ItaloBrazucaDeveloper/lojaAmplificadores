@@ -1,62 +1,87 @@
 <?PHP
-session_start();
-require "../src/functions/valida_sessao.php";
-include "../src/views/menu_global.php";
+use App\components\navigationMenu\NavigationMenu;
+use App\components\Table;
+use App\components\DialogForm;
+use App\components\Input;
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Funcionários</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../assets/css/global.css">
-  <link rel="stylesheet" href="../assets/css/form.css">
-
-  <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+  <title>Funcionários</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/navigationMenu.css">
+  <link rel="stylesheet" href="assets/css/table.css">
+  <link rel="stylesheet" href="assets/css/dialog.css">
 </head>
 
 <body>
-  <div id="principal">
+  <div class="main-container">
 
-    <header id="topo">
-      <h1 id="logo">
+    <header class="header-page">
+      <h1 class="logo">
         ROCK N'ROLL <br>
         Amplificadores
       </h1>
-      <nav id="menu_global" class="menu_global">
-        <ul align="right">
-          <?php set_menu_global($_SESSION["usuario"]["funcao_fun"]) ?>
-        </ul>
-      </nav>
+      <?PHP
+      $userSessionInfo = $_SESSION["userSessionInfo"];
+      echo NavigationMenu::render($userSessionInfo["responsability"]);
+      ?>
     </header>
 
-    <div id="conteudo_especifico">
-      <menu>
-        <ul class="menu_crud">
-          <li>
-            <a href="../src/views/exibicao_dados.php?setor=funcionarios">
-              Exibir
-            </a>
-          </li>
-          <li>
-            <a href="../src/views/cadastro.php?setor=funcionarios">
-              Cadastrar
-            </a>
-          </li>
-          <li>
-            <a href="../src/views/alteracao_dados.php?setor=funcionarios">
-              Alterar
-            </a>
-          </li>
-        </ul>
-      </menu>
-    </div>
+    <main>
+      <div class="container-table">
 
-    <footer id="rodape">
-      <div id="texto_institucional">
+        <header class="header-table">
+          <h2>
+            Funcionários <br>
+            <span>Lista de todos os funcionários cadastrados</span>
+          </h2>
+          <?PHP
+          $dialogFormUsers = new DialogForm(
+            method: "POST",
+            action: "",
+            inputs: [
+              new Input(
+                name: "nome_fun",
+                label: "Nome"
+              ),
+              new Input(
+                name: "login_fun",
+                label: "Login"
+              ),
+              new Input(
+                name: "senha_fun",
+                label: "Senha"
+              ),
+              new Input(
+                name: "funcao_fun",
+                label: "Função"
+              ),
+            ]
+          );
+          echo $dialogFormUsers->render();
+          ?>
+          <button type="button" class="open-dialog">Cadastrar functionários</button>
+        </header>
+
+        <?PHP
+        $usersTable = new Table();
+        echo $usersTable->render(
+          headers: $headers,
+          rows: $rows
+        );
+        ?>
+
+      </div>
+    </main>
+
+    <footer>
+      <div id="institutial-text">
         <span>
           AMPLI - CONTROL <br>
           Rua do Rock, 666 -- E-mail: contato@ampli_control.com.br -- Fone: (61) 9966 - 6677
@@ -65,6 +90,8 @@ include "../src/views/menu_global.php";
     </footer>
 
   </div>
+
+  <script defer src="assets/javascript" type=""></script>
 </body>
 
 </html>

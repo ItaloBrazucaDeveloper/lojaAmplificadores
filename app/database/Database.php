@@ -1,24 +1,11 @@
 <?PHP
 
 namespace App\database;
-use mysqli;
-use mysqli_result;
+use mysqli, mysqli_result;
 
 class Database
 {
   private static mysqli $mySqlConnection;
-
-  public function __construct(
-    string $hostname,
-    string $username,
-    string $userpasswd,
-    string $nameDatabase
-  ) {
-    $this->hostname = $hostname;
-    $this->username = $username;
-    $this->userpasswd = $userpasswd;
-    $this->nameDatabase = $nameDatabase;
-  }
 
   public static function connect(
     string $hostName = "localhost",
@@ -46,27 +33,16 @@ class Database
     $stmt->bind_param("ss", $username, $password); */
   }
 
-  private static function extractConditionsColumns(array $columns): string
+  private static function setConditions(array $conditions): string
   {
-    $columnsStringKeys = array_filter(
-      array: $columns,
-      callback: function ($key) use ($columns): bool {
-        $isKeyStringType = gettype($key) === "string";
-        return $isKeyStringType ? $columns[$key] : false;
-      },
-      mode: ARRAY_FILTER_USE_KEY
-    );
-
-    if (count($columnsStringKeys) > 0) {
+    if (count($conditions) > 0) {
       $conditionsOfColumns = array_map(
-        callback: fn($key, $value): string => "{$key} = '{$value}'",
-        array: array_keys($columnsStringKeys),
-        arrays: $columnsStringKeys
+        callback: fn($key): string => "{$key} = '{$conditions[$key]}'",
+        array: array_keys($conditions)
       );
 
       $conditionsOfColumns = implode(" AND ", $conditionsOfColumns);
     }
-
     return $conditionsOfColumns ?? "";
   }
 
@@ -83,22 +59,19 @@ class Database
   public static function read(
     string $tableName,
     array|string $columns = "*",
-    string $limit = "10"
+    array $conditions = []
   ): bool|mysqli_result {
-    $conditions = "";
-
-    if (is_array($columns)) {
-      $conditions = self::extractConditionsColumns($columns);
+    if (is_array($columns))
       $columns = implode(", ", $columns);
-    }
+
+    $conditions = self::setConditions($conditions);
 
     $selectQuery = "
       SELECT {$columns}
       FROM `{$tableName}`
-      
-    ";
+      " . ($conditions ? "WHERE {$conditions}" : "");
 
-    return self::$mySqlConnection->query($selectQuery);
+    return self::$mySqlConnection->query($selectQuery) ?? [];
   }
 
   public static function delete(): bool

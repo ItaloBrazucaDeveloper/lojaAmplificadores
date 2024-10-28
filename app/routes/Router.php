@@ -32,7 +32,7 @@ class Router implements Routes
     );
 
     $uriNoSiteName = str_replace(
-      search: "/lojaAmplificadores",
+      search: "/370738/lojaAmplificadores",
       replace: "",
       subject: $uri
     );
@@ -49,10 +49,8 @@ class Router implements Routes
     !$existRoute && self::call404Page();
 
     $controllerNameAndMethod = Routes::routes[$method][$uriNoSiteName];
-    [
-      $controller,
-      $method
-    ] = explode("@", $controllerNameAndMethod);
+    [$controller, $method] = 
+      explode("@", $controllerNameAndMethod);
 
     self::callController($controller, $method);
   }

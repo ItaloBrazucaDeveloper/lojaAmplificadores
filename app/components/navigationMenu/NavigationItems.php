@@ -7,19 +7,19 @@ interface NavigationItems
   const NAVIGATION_ITEMS = [
     [
       'text' => 'Vendas',
-      'href' => 'vendas'
+      'href' => 'sales'
     ],
     [
       'text' => 'Amplificadores',
-      'href' => 'amplificadores'
+      'href' => 'amplifiers'
     ],
     [
       'text' => 'Relatórios',
-      'href' => 'relatorios'
+      'href' => 'reports'
     ],
     [
       'text' => 'Funcionários',
-      'href' => 'funcionarios'
+      'href' => 'users'
     ],
   ];
 }

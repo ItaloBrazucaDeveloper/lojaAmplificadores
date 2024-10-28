@@ -2,14 +2,20 @@
 
 namespace App\Helpers;
 
-class DataHygiene {
-  public static function isNull(): bool
+class DataHygiene
+{
+  public static function isEmptyString(string ...$datas): bool
   {
-    return false;
+    foreach ($datas as $data) {
+      if ($data === "" || $data === null)
+        $hasEmptyString = true;
+      break;
+    }
+    return $hasEmptyString ?? false;
   }
 
-  public static function toLowerCase(): string
+  public static function toLowerCase(string $words): string
   {
-    return "";
+    return strtolower($words);
   }
 }

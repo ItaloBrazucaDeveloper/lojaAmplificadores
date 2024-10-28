@@ -5,7 +5,7 @@ namespace App\components\navigationMenu;
 class NavigationMenu implements NavigationItems
 {
   private static array $accessLevels = [
-    'admin' => [0, 3], // fullAcess
+    'administrador' => [0, 3], // fullAcess
     'vendedor' => [0, 2], // ["vendas", "amplificadores", "relatórios"]
     'estoquista' => [1, 2], // ["amplificadores", "relatórios"]
   ];

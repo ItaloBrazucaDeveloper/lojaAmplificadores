@@ -56,6 +56,7 @@ class Form extends Component
       <form
         action='{$this->action}'
         method='{$this->method}'
+        enctype='{$this->enctype}'
       >
         " .
           implode("", $this->renderedInputs())

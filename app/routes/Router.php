@@ -48,8 +48,7 @@ class Router implements Routes
     !$existRoute && self::call404Page();
 
     $controllerNameAndMethod = Routes::routes[$method][$uriNoSiteName];
-    [$controller, $method] = 
-      explode("@", $controllerNameAndMethod);
+    [$controller, $method] = explode("@", $controllerNameAndMethod);
 
     self::callController($controller, $method);
   }

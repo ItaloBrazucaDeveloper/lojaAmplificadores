@@ -54,7 +54,7 @@ class UsersModel
     return $reponse;
   }
 
-  public function updateUser($user)
+  public function updateUser(array $user, string $id): bool
   {
     $this->initConnection();
 
@@ -63,5 +63,7 @@ class UsersModel
     );
 
     Database::close();
+
+    return false;
   }
 }

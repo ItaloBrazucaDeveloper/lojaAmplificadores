@@ -31,6 +31,14 @@ class Table
   public function render(array $headers, array $rows): string
   {
     $tableHeader = $this->renderTableHeader($headers);
+    $notFoundRows = "
+      <tr>
+        <td class=\"not-found-rows-table\">
+          Nenhum registro encontrado. Tente novamente mais tarde.
+        </td>
+      </tr>
+    ";
+
     $tableRows = implode(
       separator: "",
       array: array_map(
@@ -38,10 +46,15 @@ class Table
         array: $rows
       )
     );
+    
     return "
       <table>
         <thead>{$tableHeader}</thead>
-        <tbody>{$tableRows}</tbody>
+        <tbody>
+          ".
+            ($tableRows !== "" ? $tableRows : $notFoundRows)
+          . "
+        </tbody>
       </table>
     ";
   }

@@ -2,6 +2,8 @@
 
 namespace App\controllers;
 use App\models\UsersModel;
+use App\components\Input;
+use App\components\Radios;
 
 class UsersController
 {
@@ -9,6 +11,59 @@ class UsersController
   {
     [$headers, $rows] = $this->list();
     require "app/views/users.php";
+  }
+
+  public function createForm()
+  {
+    $session = "Funcionários";
+    $method = "POST";
+    $action = "";
+    $inputs = [
+      new Input(
+        name: "name",
+        placeholder: "Nome",
+        inputAttributes: [
+          "required" => true,
+          "autofocus" => true,
+          "autocomplete" => "name",
+        ]
+      ),
+      new Input(
+        name: "username",
+        placeholder: "Login",
+        inputAttributes: [
+          "required" => true,
+          "autocomplete" => "login",
+        ]
+      ),
+      new Input(
+        name: "userpasswd",
+        type: "password",
+        placeholder: "Senha",
+        inputAttributes: [
+          "required" => true,
+          "autocomplete" => "false",
+        ]
+      ),
+      new Radios(
+        name: "userrole",
+        label: "Função",
+        opcoes: ["vendedor", "estoquista"],
+        defaultChecked: "vendedor"
+      ),
+    ];
+    require "app/views/create_form.php";
+  }
+
+  public function editForm()
+  {
+    $userId = parse_url(
+      url: $_SERVER["REQUEST_URI"],
+      component: PHP_URL_PATH
+    );
+
+    echo $userId;
+    require "app/views/edit_form.php";
   }
 
   private function list(): array
@@ -21,7 +76,7 @@ class UsersController
       "Login",
       "Função",
       "Status",
-      "Ações"
+      "Editar"
     ];
 
     $usersData = [];
@@ -54,7 +109,7 @@ class UsersController
     );
 
     $successQueyUri = $isCreated ? "true" : "false";
-    header("Location: users?sucess={$successQueyUri}");
+    header("Location: ?success={$successQueyUri}");
     exit;
   }
 

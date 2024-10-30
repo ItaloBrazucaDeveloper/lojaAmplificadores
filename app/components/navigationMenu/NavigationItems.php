@@ -7,19 +7,19 @@ interface NavigationItems
   const NAVIGATION_ITEMS = [
     [
       'text' => 'Vendas',
-      'href' => 'sales'
+      'href' => '/loja_amp/sales'
     ],
     [
       'text' => 'Amplificadores',
-      'href' => 'amplifiers'
+      'href' => '/loja_amp/amplifiers'
     ],
     [
       'text' => 'Relatórios',
-      'href' => 'reports'
+      'href' => '/loja_amp/reports'
     ],
     [
       'text' => 'Funcionários',
-      'href' => 'users'
+      'href' => '/loja_amp/users'
     ],
   ];
 }

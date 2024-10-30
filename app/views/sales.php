@@ -1,43 +1,86 @@
+<?PHP
+use App\components\navigationMenu\NavigationMenu;
+use App\components\Table;
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Vendas</title>
-	<link rel="stylesheet" href="../../assets/css/global.css">
-	<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendas</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/navigationMenu.css">
+  <link rel="stylesheet" href="assets/css/table.css">
 </head>
 
 <body>
-	<div id="principal">
+  <div class="main-container">
 
-		<div id="topo">
-			<div id="logo">
-				<h1> ROCK N'ROLL </h1>
-				<h1> Amplificadores </h1>
-			</div>
-			<div id="menu_global" class="menu_global">
-				<p align="right"> Olá </p>
-			</div>
-		</div>
+    <header class="header-page">
+      <h1 class="logo">
+        ROCK N'ROLL <br>
+        Amplificadores
+      </h1>
+      <?PHP
+      $userSessionInfo = $_SESSION["userSessionInfo"];
+      echo NavigationMenu::render($userSessionInfo["responsability"]);
+      ?>
+    </header>
 
-		<div id="conteudo_especifico">
-			<h1> VENDAS </h1>
-			<p> <a href="ver_fila_compras.php"> Ver a fila de compras </a> </p>
-		</div>
+    <main>
+      <div class="container-table">
+        <header class="header-table">
+          <h2>
+            Vendas <br>
+            <span>Lista de todas as vendas feitas</span>
+          </h2>
+          <a href="users/create" class="button-link">
+            Regsitrar vendas
+          </a>
+        </header>
 
-		<div id="rodape">
-			<div id="texto_institucional">
-				<div id="texto_institucional">
-					<h6> AMPLI - CONTROL </h6>
-					<h6> Rua do Rock, 666 -- E-mail: contato@ampli_control.com.br -- Fone: (61) 9966 - 6677 </h6>
-				</div>
-			</div>
-		</div>
+        <?PHP
+        $rows = array_map(
+          function ($row) {
+             $row["actions"] = "
+              <a href='users/edit/:id{$row['cod_vendas']}'>
+                <img
+                  class='open-dialog'
+                  data-action='edit'
+                  height='20px'
+                  src='assets/svg/edit_row.svg'
+                  alt='edit'
+                />
+              </a>
+            ";
+            return $row;
+          }, $rows
+        );
 
-	</div>
+        // Read Users table
+        $usersTable = new Table();
+        echo $usersTable->render(
+          headers: $headers,
+          rows: $rows
+        );
+        ?>
+      </div>
+    </main>
+
+    <footer>
+      <div id="institutial-text">
+        <span>
+          AMPLI - CONTROL <br>
+          Rua do Rock, 666 -- E-mail: contato@ampli_control.com.br -- Fone: (61) 9966 - 6677
+        </span>
+      </div>
+    </footer>
+
+  </div>
+
 </body>
 
 </html>

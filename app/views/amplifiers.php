@@ -1,41 +1,77 @@
+<?PHP
+use App\components\navigationMenu\NavigationMenu;
+use App\components\Table;
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Amplificadores</title>
-  <link rel="stylesheet" href="../assets/css/global.css">
-  <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/navigationMenu.css">
+  <link rel="stylesheet" href="assets/css/table.css">
 </head>
 
 <body>
-  <div id="principal">
+  <div class="main-container">
 
-    <header id="topo">
-      <h1 id="logo">
+    <header class="header-page">
+      <h1 class="logo">
         ROCK N'ROLL <br>
         Amplificadores
       </h1>
-      <nav id="menu_global" class="menu_global">
-        <ul align="right">
-          <?php set_menu_global($_SESSION["usuario"]["funcao_fun"]) ?>
-        </ul>
-      </nav>
+      <?PHP
+      $userSessionInfo = $_SESSION["userSessionInfo"];
+      echo NavigationMenu::render($userSessionInfo["responsability"]);
+      ?>
     </header>
 
-    <div id="conteudo_especifico">
-      <h1> AMPLIFICADORES </h1>
-      <p align="right">
-        <a href="../src/views/cadastro.php?setor=amplificadores">
-          Cadastrar amplificador
-        </a>
-      </p>
-    </div>
+    <main>
+      <div class="container-table">
+        <header class="header-table">
+          <h2>
+            Amplificadores <br>
+            <span>Lista de todos os Amplificadores cadastrados</span>
+          </h2>
+          <a href="amplifiers/create" class="button-link">
+            Registrar Amplificadores
+          </a>
+        </header>
 
-    <footer id="rodape">
-      <div id="texto_institucional">
+        <?PHP
+        $rows = array_map(
+          function ($row) {
+             $row["actions"] = "
+              <a href='users/edit/:id{$row['cod_amp']}'>
+                <img
+                  class='open-dialog'
+                  data-action='edit'
+                  height='20px'
+                  src='assets/svg/edit_row.svg'
+                  alt='edit'
+                />
+              </a>
+            ";
+            return $row;
+          }, $rows
+        );
+
+        // Read Users table
+        $usersTable = new Table();
+        echo $usersTable->render(
+          headers: $headers,
+          rows: $rows
+        );
+        ?>
+      </div>
+    </main>
+
+    <footer>
+      <div id="institutial-text">
         <span>
           AMPLI - CONTROL <br>
           Rua do Rock, 666 -- E-mail: contato@ampli_control.com.br -- Fone: (61) 9966 - 6677
@@ -44,6 +80,7 @@
     </footer>
 
   </div>
+
 </body>
 
 </html>

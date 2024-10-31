@@ -7,6 +7,61 @@ use App\components\Select;
 
 class AmplifiersController
 {
+  private array $formSettings;
+
+  public function __construct() {
+    $this->formSettings = [
+      'session' => "Amplificadores",
+      'method' => "POST",
+      'action' => "",
+      'enctype' => "multipart/form-data",
+      'inputs' => [
+        new Input(
+          name: "brand",
+          placeholder: "Marca",
+          inputAttributes: [
+            "required" => true,
+            "autofocus" => true,
+          ]
+        ),
+        new Input(
+          name: "model",
+          placeholder: "Modelo",
+          inputAttributes: [
+            "required" => true,
+          ]
+        ),
+        new Input(
+          name: "price",
+          placeholder: "Preço",
+          inputAttributes: [
+            "required" => true,
+          ]
+        ),
+        new Input (
+          name: "photo",
+          type: "file",
+          inputAttributes: [
+            "accept" => "image/*",
+            "required" => true,
+          ]
+        ),
+        new Select(
+          name: "type",
+          label: "Tipo",
+          options: [
+            "Guitarra",
+            "Violão",
+            "Baixo"
+          ],
+          inputAttributes: [
+            "required" => true,
+          ]
+        ),
+      ]
+    ];
+  }
+
   public function index()
   {
     [$headers, $rows] = $this->list();
@@ -15,60 +70,28 @@ class AmplifiersController
 
   public function createForm()
   {
-    $session = "Amplificadores";
-    $method = "POST";
-    $action = "";
-    $enctype = "multipart/form-data";
-    $inputs = [
-      new Input(
-        name: "brand",
-        placeholder: "Marca",
-        inputAttributes: [
-          "required" => true,
-          "autofocus" => true,
-        ]
-      ),
-      new Input(
-        name: "model",
-        placeholder: "Modelo",
-        inputAttributes: [
-          "required" => true,
-        ]
-      ),
-      new Input(
-        name: "price",
-        placeholder: "Preço",
-        inputAttributes: [
-          "required" => true,
-        ]
-      ),
-      new Input (
-        name: "photo",
-        type: "file",
-        inputAttributes: [
-          "accept" => "image/*",
-          "required" => true,
-        ]
-      ),
-      new Select(
-        name: "type",
-        label: "Tipo",
-        opcoes: [
-          "Guitarra",
-          "Violão",
-          "Baixo"
-        ],
-        inputAttributes: [
-          "required" => true,
-        ]
-      ),
-    ];
+    [
+      "session" => $session,
+      "method" => $method,
+      "action" => $action,
+      "enctype" => $enctype,
+      "inputs" => $inputs
+    ] = $this->formSettings;
+
     require "app/views/create_form.php";
   }
 
   public function editForm()
   {
-    require "app/views/edit_form.php";
+    [
+      "session" => $session,
+      "method" => $method,
+      "action" => $action,
+      "enctype" => $enctype,
+      "inputs" => $inputs
+    ] = $this->formSettings;
+
+    require "app/views/update_form.php";
   }
 
   private function list(): array

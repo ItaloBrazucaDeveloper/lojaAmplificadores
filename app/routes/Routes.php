@@ -12,12 +12,12 @@ interface Routes
       /* Users */
       "/users" => "Users@index",
       "/users/create" => "Users@createForm",
-      "/\/users\/edit\/:id(\d+)/" => "Users@editForm",
+      "#^/users/edit/(\d+)$#" => "Users@editForm",
 
       /* Amplifiers */
       "/amplifiers" => "Amplifiers@index",
       "/amplifiers/create" => "Amplifiers@createForm",
-      "/\/amplifiers\/edit\/:id(\d+)/" => "Amplifiers@editForm",
+      "#^/amplifiers/edit/(\d+)$#" => "Amplifiers@editForm",
 
       /* Sales */
       "/sales" => "Sales@index",
@@ -32,11 +32,11 @@ interface Routes
 
       /* Users */
       "/users/create" => "Users@create",
-      "/users/edit/:id" => "Users@edit",
+      "#^/users/edit/(\d+)$#" => "Users@edit",
 
       /* Amplifiers */
       "/amplifiers/create" => "Amplifiers@create",
-      "/amplifiers/edit/:id" => "Amplifiers@edit",
+      "#^/amplifiers/edit/(\d+)$#" => "Amplifiers@edit",
     ]
   ];
 }

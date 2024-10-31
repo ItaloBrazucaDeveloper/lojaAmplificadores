@@ -46,7 +46,7 @@ use App\components\Table;
         $rows = array_map(
           function ($row) {
              $row["actions"] = "
-              <a href='users/edit/:id{$row['cod_fun']}'>
+              <a href='users/edit/{$row['cod_fun']}'>
                 <img
                   class='open-dialog'
                   data-action='edit'

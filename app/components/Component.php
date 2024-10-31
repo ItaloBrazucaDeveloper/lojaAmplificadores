@@ -6,6 +6,16 @@ abstract class Component
 {
   private array $htmlAttributes;
 
+  public function setHtmlAttributes(array $htmlAttributes): void
+  {
+    $this->htmlAttributes = $htmlAttributes;
+  }
+
+  public function getHtmlAttributes(): array
+  {
+    return $this->htmlAttributes;
+  }
+
   public function __construct($htmlAttributes = [])
   {
     $this->htmlAttributes = $htmlAttributes;

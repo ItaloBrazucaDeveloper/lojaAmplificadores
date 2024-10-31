@@ -8,7 +8,7 @@ class Form extends Component
   private string $action;
   private string $enctype;
   private string $submitButtonText;
-  /** @var Input[]  */
+  /** @var array<Input|Radio|Select  */
   private array $inputs;
 
   public function setMethod(string $method): void

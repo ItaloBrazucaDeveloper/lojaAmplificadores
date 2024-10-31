@@ -16,19 +16,22 @@ class UsersModel
     );
   }
 
-  public static function getUsers(): bool|mysqli_result
-  {
+  public static function getUsers(
+    array $columns = [
+      "cod_fun",
+      "nome_fun",
+      "login_fun",
+      "funcao_fun",
+      "status_fun",
+    ],
+    array $conditions = []
+  ): bool|mysqli_result {
     self::initConnection();
 
     $response = Database::read(
       tableName: "funcionarios",
-      columns: [
-        "cod_fun",
-        "nome_fun",
-        "login_fun",
-        "funcao_fun",
-        "status_fun",
-      ]
+      columns: $columns,
+      conditions: $conditions
     );
 
     Database::close();

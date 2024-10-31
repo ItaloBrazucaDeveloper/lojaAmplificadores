@@ -10,7 +10,7 @@ class Select extends Input
 
   public function __construct(
     string $name,
-    array $opcoes,
+    array $options,
     string $label = "",
     array $inputAttributes = []
   ) {
@@ -21,7 +21,7 @@ class Select extends Input
       label: $label,
       inputAttributes: $inputAttributes
     );
-    $this->opcoes = $opcoes;
+    $this->opcoes = $options;
   }
 
   private function gerar_opcoes(mixed $opcao, mixed $valor = ""): string
